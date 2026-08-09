@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/main.dart';
 import 'package:todo_app/screens/user_detais_screen.dart';
 import 'package:todo_app/screens/welcome_screen.dart';
 class ProfileScreen extends StatefulWidget {
@@ -177,7 +178,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Switch(value:true ,
                          onChanged:(bool value) {
                           setState((){
-                          isDarkMode = value;
+                            isDarkMode = value;
+                            if(isDarkMode){
+                          themeNotifier.value = ThemeMode.light;
+                            } else{themeNotifier.value = ThemeMode.dark;}
                           });
                          },
                          activeTrackColor: Color(0xFF15B86C),
