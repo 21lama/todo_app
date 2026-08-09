@@ -29,30 +29,28 @@ class WelcomeScreen extends StatelessWidget {
                       width: 42,
                     ),
                     const SizedBox(width: 16), //مسافة بين الصورة والنص
-                    const Text(
+                     Text(
                       "Tasky",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: 
+                      Theme.of(context).textTheme.displayMedium,
+                    
                     ),
                   ],
                 ),
               const SizedBox(height: 108),
               Text("Welcom To Tasky",
-              style: TextStyle(color: Color(0xFFFFFCFC),
-              fontSize: 24,
-              fontWeight: FontWeight.w400,
-              ),
+              style: 
+              Theme.of(context).textTheme.displaySmall
+              
               
             ),
               SizedBox(height: 8,),
               Text("Your productivity start here",
-              style: TextStyle(color: Color(0xFFFFFCFC),
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              )
+              style:
+                 Theme.of(context).textTheme.displaySmall!.copyWith(
+                   fontSize: 16
+                 ),
+               
               ),
              SizedBox(height:24),
              Image(
