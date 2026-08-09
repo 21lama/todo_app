@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/core/services/preferece_manager.dart';
+import 'package:todo_app/core/theme/dark_theme.dart';
 import 'package:todo_app/screens/home_screen.dart';
 import 'package:todo_app/screens/main_screen.dart';
 import 'package:todo_app/screens/welcome_screen.dart';
@@ -24,30 +25,7 @@ final String? username;
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'tasky',
-      theme: ThemeData(
-        //لون خلفية مشترك لكل السكرين لانه السكافولد بتوخد القيمة الموجودة هوت في المتيريال اب
-        scaffoldBackgroundColor: Color(0xFF181818),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xFF181818), //لون خلفية الشاشة
-          titleTextStyle: TextStyle(
-            color: Color(0xFFFFFCFC), //لون النص الي رح يظهر ع appBar
-            fontSize: 20,
-          ),
-       centerTitle: false,
-       iconTheme: IconThemeData(
-        color: Color(0xfffffcfc),
-       ),
-        ),
-        
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(Color(0xFF15B86C)),
-                        foregroundColor: WidgetStateProperty.all(Color(0xFFFFFCFC)),
-          ),
-        ),
-        useMaterial3: true,
-      ),
-      
+      theme: darktheme,
       //ادا كان المستخدم مدخل اسمه ببعت~ه ع الهوم سكرين مباشرة
       home: username == null ? WelcomeScreen() : MainScreen(),
     );

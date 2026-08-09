@@ -29,8 +29,7 @@ final String title;
                    controller: controller, //بوخد controller الي اعملته
                     style: TextStyle(  //تنسيقات النص
                    
-                      color: Colors.white , //لون النص الي رح يكتبه المستخدم
-                     
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
                    
                      validator: validator != null ? (String? value) => validator!(value): null,
@@ -38,14 +37,6 @@ final String title;
                    //maxLines: maxLines, //لتكبير حجم textFormField
                    decoration: InputDecoration( //بسمح لللمستخدم يكتب جواته كانه textbox
                    hintText: hintText,//'finish on bording UI and hand of to dev during sunday ' , //تلميحة للمستخدم ايش يكتب
-                   hintStyle: TextStyle(color: Color(0xFF6D6D6D)), // color of hint text
-                   
-                   filled: true, //سمحت اعطي الخلفية لون
-                   fillColor: Color(0xFF282828), // لون الخلفية لمربع النص
-                   border:OutlineInputBorder(
-                   borderRadius: BorderRadius.circular(16),
-                   borderSide: BorderSide.none
-                   )
                    
                    ),
                    cursorColor: Colors.white,
