@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/screens/user_detais_screen.dart';
+import 'package:todo_app/screens/welcome_screen.dart';
 class ProfileScreen extends StatefulWidget {
 const ProfileScreen({super.key});
 
@@ -11,23 +12,27 @@ const ProfileScreen({super.key});
 
 class _ProfileScreenState extends State<ProfileScreen> {
   //مشان يوخد الاسم الي بدخله المستخدم
-   late final String username;
+   late  String username;
    bool isloading =true;
    bool isDarkMode = true;
+    String? motivationQuote;
+
 
    @override
   //رح تتنفذ بالبداية
   void initState() {
     super.initState();
-    _loadUserName();
+    _loadData();
   
   }
- void _loadUserName() async{
+ void _loadData() async{
       final pref = await SharedPreferences.getInstance();
   
   setState(() {
     //جاب اسم المستخدم
     username= pref.getString('username') ?? '';
+   motivationQuote= pref.getString('motivation_quote');
+
      isloading = false;
   });
  
@@ -96,7 +101,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontWeight: FontWeight.w400,
                         ) ,
                        ) ,
-                          Text('One task at a time. One step closer ' ,
+                          Text(
+                            motivationQuote ?? 'One task at a time. One step closer ' ,
                            style:TextStyle(
                           color: Color(0xFFC6C6C6),
                           fontSize: 14,
@@ -118,10 +124,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
          
                       // 3 widget جنب بعض
                       ListTile(
-                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                          return UserDetaisScreen();
+                       onTap: () async{
+                        final result =await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                          return UserDetaisScreen(
+                            userName: username,
+                            motivationQuote: motivationQuote,
+                          );
                         },));
+                        if( result!=null && result){
+                          _loadData();
+                        }
                        },
                        contentPadding: EdgeInsets.zero,
                        title: Text('User Details',
@@ -178,9 +190,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         thickness: 1,
                       ),
                   ListTile(
-                       onTap: () {},
+                       onTap: () async {
+                            final pref = await SharedPreferences.getInstance();
+                            pref.remove("username");
+                            pref.remove("motivation_quote");
+                            pref.remove("tasks");
+                            Navigator.pushAndRemoveUntil(context,
+                             MaterialPageRoute(
+                              builder: (BuildContext context){
+                                return WelcomeScreen();
+                              },),
+                                    (Route<dynamic>route)=>false,
+                            );
+                       },    
+
                        contentPadding: EdgeInsets.zero,
-                       title: Text('Log Out',
+                       title: Text('Log Outq',
                        style: TextStyle(
                         color: Color(0xFFFFFCFC),
                         fontSize: 16,

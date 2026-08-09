@@ -1,8 +1,8 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/core/widget/custom_text_form_feild.dart';
 import 'package:todo_app/models/task_model.dart';
 
 class AddTask extends StatefulWidget {
@@ -49,83 +49,31 @@ class _AddTaskState extends State<AddTask> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
-              Text('task name',
-              style: TextStyle(
-                color: Color(0xFFFFFCFC),
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
-              ),
-            SizedBox(height: 8,),
-          
-            TextFormField( // have a parent named form
-                  // كل ما يصير تعديل ع الاسم الي رح يدخله المستخدم بناديها ورح يخزن الاسم الجديد
-                 controller: taskNameController, //بوخد controller الي اعملته
-                  style: TextStyle(  //تنسيقات النص
-                 
-                    color: Colors.white , //لون النص الي رح يكتبه المستخدم
-                  ),
-                 
-                 validator: (String? value){
+
+              //بدل ما اكتب الكود بكل شاشة حطيته بملف منفصل وصرت اناديه عند الحاجة
+              CustomTextFormFeild(
+                controller: taskNameController,
+                title: 'task name',
+                hintText: 'inish UI design to login screen',
+                validator: (String? value){
                   if(value?.trim().isEmpty ?? false){ // ادا ما دخل المستخدم اسم وكبس ع الباتون
                     return "please enter task name";
                   }
                   return null;
-                  
-                 },
-                 decoration: InputDecoration( //بسمح لللمستخدم يكتب جواته كانه textbox
-                 hintText: 'inish UI design to login screen' , //تلميحة للمستخدم ايش يكتب
-                 hintStyle: TextStyle(color: Color(0xFF6D6D6D)), // color of hint text
-                 
-                 filled: true, //سمحت اعطي الخلفية لون
-                 fillColor: Color(0xFF282828), // لون الخلفية لمربع النص
-                 border:OutlineInputBorder(
-                 borderRadius: BorderRadius.circular(16),
-                 borderSide: BorderSide.none
-                 )
-                 
-                 ),
-                 cursorColor: Colors.white,
-                 ),
+                },
+              ),
+
             SizedBox(height: 20,),
-          
-              SizedBox(height: 8,),
-              Text('task description',
-              style: TextStyle(
-                color: Color(0xFFFFFCFC),
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
-              
-              ),
-            
-          SizedBox(height: 8,),
-          
-            TextFormField( // have a parent named form
-                  // كل ما يصير تعديل ع الاسم الي رح يدخله المستخدم بناديها ورح يخزن الاسم الجديد
-                 controller: taskDescriptionController, //بوخد controller الي اعملته
-                  style: TextStyle(  //تنسيقات النص
-                 
-                    color: Colors.white , //لون النص الي رح يكتبه المستخدم
-                  ),
-                 
-                
-                 maxLines: 4, //لتكبير حجم textFormField
-                 decoration: InputDecoration( //بسمح لللمستخدم يكتب جواته كانه textbox
-                 hintText: 'finish on bording UI and hand of to dev during sunday ' , //تلميحة للمستخدم ايش يكتب
-                 hintStyle: TextStyle(color: Color(0xFF6D6D6D)), // color of hint text
-                 
-                 filled: true, //سمحت اعطي الخلفية لون
-                 fillColor: Color(0xFF282828), // لون الخلفية لمربع النص
-                 border:OutlineInputBorder(
-                 borderRadius: BorderRadius.circular(16),
-                 borderSide: BorderSide.none
-                 )
-                 
-                 ),
-                 cursorColor: Colors.white,
-                 ),SizedBox(height: 8,),
+
+          //بدل ما اكتب الكود بكل شاشة حطيته بملف منصل وصرت اناديه عند الحاجة
+          CustomTextFormFeild(
+            controller: taskDescriptionController,
+            title: 'task description',
+            maxLines: 5,
+            hintText: 'nish on bording UI and hand of to dev during sunday ',
+          ),
+
+                 SizedBox(height: 8,),
          SizedBox(height: 20,),
          Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween ,  //مسافة بين السويتش والنص
@@ -176,16 +124,7 @@ class _AddTaskState extends State<AddTask> {
                 taskName: taskNameController.text, 
                taskDescription: taskDescriptionController.text,
                 isHighPrio: isHighPrio);
-               // json: بوخد مني الاوبجكت ع key and value
-                             //key , value
-               //final task = <String, dynamic>{
-                //"taskName": taskNameController.text, //اخدت الاسم
-                //"taskDescription": taskDescriptionController.text, // اخدت الوصف
-                //"isHighPrio" : isHighPrio,
-              // };
-              
-               
-                //listTasks.add(task); // add to list
+
                  listTasks.add(model.toMap());
                final taskEncode = jsonEncode(listTasks); //حولتهم من key and value to string
                await pref.setString("tasks", taskEncode);
