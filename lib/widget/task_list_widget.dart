@@ -6,11 +6,22 @@ class TaskListWidget extends StatelessWidget {
   const TaskListWidget({super.key, required this.tasks, required this.onTap});
 
   final List<TaskModel> tasks;
+  //ادا صار اي تعديل ع اللتاسك انه خلصت او لا ببترجع اتنادي اي حد بستخدم askLisWidgget
   final Function(bool?, int?) onTap;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return tasks.isEmpty ? Center(child: Text ("No Data",
+    style: TextStyle(color: Colors.white,fontSize:24),
+    ) )
+    
+    :ListView.builder(
+      shrinkWrap: true, 
+
+physics: NeverScrollableScrollPhysics(),
+
+
+       
       padding: EdgeInsets.only(bottom: 60), // مسافة بين الزر واخر عنصر بالتاسك
       itemCount: tasks.length, //بحكي ل الليست كم عنصر جواتها
       itemBuilder: (BuildContext context, int index) {

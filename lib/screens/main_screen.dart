@@ -6,7 +6,7 @@ import 'package:todo_app/screens/profile_screen.dart';
 import 'package:todo_app/screens/task_screen.dart';
 
 class MainScreen extends StatefulWidget {
-MainScreen({super.key});
+const MainScreen({super.key});
 
   @override
 State<MainScreen> createState ()=>_MainScreenState();
@@ -62,7 +62,7 @@ setState(() {
     ),
   ],
 ),
-    body:_screen [_cuentscreen],
+    body:SafeArea(child:_screen [_cuentscreen]), //خليت safeArea مشتركة لكل الشاشات
     );
   }
 }

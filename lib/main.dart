@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   final pref = await SharedPreferences.getInstance();
+ 
   String? username= pref.getString('username');
 
   runApp( MyApp(username: username,));
@@ -15,7 +16,7 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.username});
 final String? username;
-  @overridess
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'tasky',
@@ -36,7 +37,7 @@ final String? username;
         useMaterial3: true,
       ),
       
-      //ادا كان المستخدم مدخل اسمه ببعته ع الهوم سكرين مباشرة
+      //ادا كان المستخدم مدخل اسمه ببعت~ه ع الهوم سكرين مباشرة
       home: username == null ? WelcomeScreen() : MainScreen(),
     );
   }

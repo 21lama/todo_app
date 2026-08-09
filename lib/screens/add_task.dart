@@ -3,9 +3,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/models/task_model.dart';
 
 class AddTask extends StatefulWidget {
-   AddTask({super.key});
+   const AddTask({super.key});
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -161,22 +162,31 @@ class _AddTaskState extends State<AddTask> {
                   label: Text("add task"),
             onPressed: () async{
               if(_key.currentState?.validate() ?? false){}
-               // json: بوخد مني الاوبجكت ع key and value
-                             //key , value
-               final task = <String, dynamic>{
-                "taskName": taskNameController.text, //اخدت الاسم
-                "taskDescription": taskDescriptionController.text, // اخدت الوصف
-                "isHighPrio" : isHighPrio,
-               };
-               final pref = await SharedPreferences.getInstance(); 
+              final pref = await SharedPreferences.getInstance(); 
                final taskJson = pref.getString("tasks"); // جيب التاسك القديمة
+               
                //مشان اجيب التاسكات القديمة
                List<dynamic> listTasks= [];
                if(taskJson != null){
                 listTasks = jsonDecode(taskJson); //بعد ما فكيت تشفيرها ورجعتها ل داينمك هون جاب التاسك القديمة
                }
-                listTasks.add(task); // add to list
 
+               TaskModel model = TaskModel(
+                id: listTasks.length+1,
+                taskName: taskNameController.text, 
+               taskDescription: taskDescriptionController.text,
+                isHighPrio: isHighPrio);
+               // json: بوخد مني الاوبجكت ع key and value
+                             //key , value
+               //final task = <String, dynamic>{
+                //"taskName": taskNameController.text, //اخدت الاسم
+                //"taskDescription": taskDescriptionController.text, // اخدت الوصف
+                //"isHighPrio" : isHighPrio,
+              // };
+              
+               
+                //listTasks.add(task); // add to list
+                 listTasks.add(model.toMap());
                final taskEncode = jsonEncode(listTasks); //حولتهم من key and value to string
                await pref.setString("tasks", taskEncode);
           

@@ -14,35 +14,37 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
+   
+   List<TaskModel> toDoTasks = []; // نفس اللي بـ home_screen.dart
    bool isCheck = false; //default value for checkBox
-  List<TaskModel> task = []; // نفس اللي بـ home_screen.dart
-
+   bool isloading = false;
+  
   @override
    void initState() {
     super.initState();
     _loadTask();
   }
   //بتجيب الليست الخاصة بالتاسك
-  void _loadTask() async {
-    final pref = await SharedPreferences.getInstance();
-    final finalTask = pref.getString('tasks');
-    if(finalTask !=null){
-    final taskAfterDecode = jsonDecode(finalTask ?? "") as List<dynamic>;
-     
-   final tasks = taskAfterDecode.map((element) {
-  return TaskModel(
-    taskName: element["taskName"],
-    taskDescription: element["taskDescription"],
-    isHighPrio: element["isHighPrio"],
-  );
-}).toList();
+ void _loadTask() async {
+  setState(() {
+    isloading = true;
+  });
 
-setState(() {
-  task = taskAfterDecode.map((element) => TaskModel.fromJson(element)).toList();
-  task=task.where((element) => element.isDone == false).toList(); //لعرض التاسكات الي لسا ما خلصتها
-});
+  final pref = await SharedPreferences.getInstance();
+  final finalTask = pref.getString('tasks');
+
+  if (finalTask != null) {
+    final taskAfterDecode = jsonDecode(finalTask) as List<dynamic>;
+    setState(() {
+      toDoTasks = taskAfterDecode.map((element) => TaskModel.fromJson(element)).toList();
+      toDoTasks = toDoTasks.where((element) => element.isDone == false).toList();
+    });
   }
-  }
+
+  setState(() {
+    isloading = false;  
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -51,19 +53,30 @@ setState(() {
       appBar : AppBar(title : Text("To Do Task")),
       body: Padding(
         padding: EdgeInsets.all(16),
-       child:TaskListWidget(tasks: task,
+        child: isloading ? Center (child: CircularProgressIndicator(value:20,))
+       :TaskListWidget(tasks: toDoTasks,
        onTap: (value, index) async{
          setState(() {
-              task[index!].isDone = value ?? false; // store on ram temprature
+              toDoTasks[index!].isDone = value ?? false; // store on ram temprature
                                       
                });
              // update task on sharedPrefrence
              final pref = await SharedPreferences.getInstance();
-            final updateTask = task.map((element) => element.toMap() ).toList();
-             final allData= pref.getString("tasks");
-           pref.setString('tasks',jsonEncode(updateTask) );
-           List<TaskModel> allDataList= (jsonDecode(allData) as List).map(element ) =>TaskModel.fromJson(element)).toString();
+            //final updateTask = tasks.map((element) => element.toMap() ).toList();
+             //final allData= pref.getString("tasks");
+          // pref.setString('tasks',jsonEncode(allDataList) );
+          
+          final allData = pref.getString('tasks');
+          if (allData != null){
+         List<TaskModel> allDataList =
+   (jsonDecode(allData) as List)
+        .map((element) => TaskModel.fromJson(element))
+        .toList();
+        final int newIndex = allDataList.indexWhere((e) => e.id == toDoTasks[index!].id);
+        allDataList[newIndex] = toDoTasks[index!];
+           pref.setString('tasks',jsonEncode(allDataList) );pref.setString('tasks',jsonEncode(allDataList) );
             _loadTask();
+       }
        },
        ),
         )
