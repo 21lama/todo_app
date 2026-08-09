@@ -1,3 +1,5 @@
+
+import 'package:shared_preferences/shared_preferences.dart';
 class PreferencesManager {
   static final PreferencesManager _instance = PreferencesManager._internal();
 
@@ -14,6 +16,17 @@ class PreferencesManager {
   }
 
   String? getString(String key) {
-    return _preferences.getString(key);   // ✅ نفس الاسم
+    return _preferences.getString(key);   
   }
+  
+  Future<bool> setString(String key , String value) async{
+    return await _preferences.setString(key, value) ; 
+  }
+
+    getBool(String key){
+      return _preferences.getBool(key);
+    }
+    setBool(String key,bool value ) async{
+      return await _preferences.setBool(key, value);
+    }
 }
