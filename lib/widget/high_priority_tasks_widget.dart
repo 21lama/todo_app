@@ -14,7 +14,7 @@ final Function refresh; // مشان اعمل ريفريش للشاشة لما ا
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Color(0xFF282828),
+        color:Theme.of(context).colorScheme.primaryContainer, 
         borderRadius: BorderRadius.circular(20),
 
       ),
@@ -52,18 +52,12 @@ final Function refresh; // مشان اعمل ريفريش للشاشة لما ا
                   Expanded(
                     child: Text(
                                 element.taskName,
-                                style: TextStyle(
-                                  //ادا محطوط عليها صح غير لونها واشطبها
-                                  color: element.isDone
-                                      ? Color(0xFFA0A0A0)
-                                      : Color(0xFFFFFCFC),
-                                  fontSize: 16,
-                                  decoration: element.isDone
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none,
-                                  decorationColor: Color(0xFFA0A0A0),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                               
+                                style: element.isDone ?
+                                Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 16) 
+                                : Theme.of(context).textTheme.titleMedium,
+                                
+                                
                               ),
                   ),
                   ],

@@ -56,14 +56,6 @@ setState(() {
 
 });
 
-    //tasks = taskAfterDecode.map((element) {
-  //return TaskModel(
-   // id: element["id"],
-    //taskName: element["taskName"],
-    //taskDescription: element["taskDescription"],
-   // isHighPrio: element["isHighPrio"],
-  //);
-//}).toList();
 
 setState(() {
   this.tasks = tasks;
@@ -94,18 +86,10 @@ setState(() {
                   crossAxisAlignment: CrossAxisAlignment.start, //مشان النصوص الي جواته يبلشوا من البداية من الشمال يعني
                   children: [
                    Text("Good Evning $username",
-                    style: TextStyle(
-                      color: Color(0xFFFFFCFC),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
+                     style: Theme.of(context).textTheme.titleMedium,
                  ),
                 Text("One task at a time, one step closer.",
-                style: TextStyle(
-                  color: Color(0xFFC6C6C6),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
+                style:Theme.of(context).textTheme.titleSmall,
                 ),
               ],
               ),
@@ -115,17 +99,14 @@ setState(() {
           SizedBox(height: 16,),
           Text(
             'yuhhu, Your work Is \nalmost done !',
-           style: TextStyle(
-            color: Color(0xFFFFFCFC),
-            fontSize: 32,
-           ),
+              style:Theme.of(context).textTheme.titleLarge,
           
           ),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Color(0xFF282828),
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -137,19 +118,11 @@ setState(() {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
               Text('Achived Task',
-                  style: TextStyle(
-                    color: Color(0xFFFFFCFC),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                   ),
                   SizedBox(height: 4,),
                   Text('$totalDoneTask Out of $totalTask',
-                  style: TextStyle(
-                    color: Color(0xFFFFFCFC),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
                   ),
                   ],
                 ),
@@ -158,10 +131,7 @@ setState(() {
                children: [
                 CircularProgressIndicator(value:percent),
                 Text("${((percent * 100).toInt())}%" ,
-                style: TextStyle(color:Color(0xFFFFFCFC),
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                )
+                style: Theme.of(context).textTheme.titleMedium,
               ),
                ], 
               )
