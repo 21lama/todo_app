@@ -1,14 +1,21 @@
 //لاحظنا انه بكل سكرين عنا تشابه بالليست ف مشان ما أكررهم بكل سكرين بخليهم مشتركين ببكب
 import 'package:flutter/material.dart';
-import 'package:todo_app/core/enum/task_iem_action_enum.dart' show TaskIemActionsEnum;
+import 'package:todo_app/core/enum/task_iem_action_enum.dart' show TaskItemActionsEnum;
 import 'package:todo_app/models/task_model.dart';
 
 class TaskListWidget extends StatelessWidget {
-  const TaskListWidget({super.key, required this.tasks, required this.onTap});
+  const TaskListWidget({super.key, required this.model, required this.onChanged,
+   required this.tasks, required this.onDelete,
+    required this.onTap});
 
   final List<TaskModel> tasks;
   //ادا صار اي تعديل ع اللتاسك انه خلصت او لا ببترجع اتنادي اي حد بستخدم askLisWidgget
   final Function(bool?, int?) onTap;
+   final Function(bool?) onChanged;
+   final Function(int) onDelete;
+   final TaskModel model;
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,21 +92,24 @@ physics: NeverScrollableScrollPhysics(),
                 ),
                 // اضافة التلت نقاط الي فوق بعض وجعلها قابلة للكبس
                 
-                PopupMenuButton<TaskIemActionsEnum>(
+                PopupMenuButton<TaskItemActionsEnum>(
   icon: Icon(
     Icons.more_vert,
     color: Color(0xFFA0A0A0),
   ),
   onSelected: (value) {
       switch (value){
-     case TaskIemActionsEnum.delete:
+
+    case TaskItemActionsEnum.markAsDone:
+       onChanged(!model.isDone);
+     case TaskItemActionsEnum.delete:
       
-     case TaskIemActionsEnum.edit: }
+     case TaskItemActionsEnum.edit: }
       
     
   },
-  itemBuilder: (context) => TaskIemActionsEnum.values.map((e) {
-    return PopupMenuItem<TaskIemActionsEnum>(
+  itemBuilder: (context) => TaskItemActionsEnum.values.map((e) {
+    return PopupMenuItem<TaskItemActionsEnum>(
       value: e,
       child: Text(e.name),
     );
