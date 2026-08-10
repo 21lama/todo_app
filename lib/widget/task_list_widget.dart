@@ -1,5 +1,6 @@
 //لاحظنا انه بكل سكرين عنا تشابه بالليست ف مشان ما أكررهم بكل سكرين بخليهم مشتركين ببكب
 import 'package:flutter/material.dart';
+import 'package:todo_app/core/enum/task_iem_action_enum.dart' show TaskIemActionsEnum;
 import 'package:todo_app/models/task_model.dart';
 
 class TaskListWidget extends StatelessWidget {
@@ -83,13 +84,29 @@ physics: NeverScrollableScrollPhysics(),
                   ),
                 ),
                 // اضافة التلت نقاط الي فوق بعض وجعلها قابلة للكبس
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.more_vert,
-                    color: Color(0xFFA0A0A0),
-                  ),
-                ),
+                
+                PopupMenuButton<TaskIemActionsEnum>(
+  icon: Icon(
+    Icons.more_vert,
+    color: Color(0xFFA0A0A0),
+  ),
+  onSelected: (value) {
+      switch (value){
+     case TaskIemActionsEnum.delete:
+      
+     case TaskIemActionsEnum.edit: }
+      
+    
+  },
+  itemBuilder: (context) => TaskIemActionsEnum.values.map((e) {
+    return PopupMenuItem<TaskIemActionsEnum>(
+      value: e,
+      child: Text(e.name),
+    );
+  }).toList(),
+),
+              
+                
               ],
             ),
           ),
