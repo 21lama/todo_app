@@ -1,5 +1,9 @@
 
+import 'dart:io' show File;
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/core/services/preferece_manager.dart' show PreferencesManager;
 import 'package:todo_app/core/theme/theme_controller.dart';
@@ -19,6 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
    bool isloading =true;
    
     String? motivationQuote;
+    File? _selectedImage;
 
 
    @override
@@ -66,12 +71,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                    alignment: Alignment.bottomRight ,
                      children: [
                        CircleAvatar(
-                                     backgroundImage: AssetImage('assets/images/person.png'),
+                                     backgroundImage:
+                                        _selectedImage ==null?
+                                      AssetImage('assets/images/person.png')
+                                      : FileImage(_selectedImage!),
                                      radius: 60,
                                      backgroundColor: Colors.transparent, //شال خلفية الصورة
                                    ),
                                GestureDetector( //make it clickabale
-                                 onTap: () {},
+                                 onTap:() async {
+                                  showImageSourceDialog(context,
+                                   (XFile file){
+                                    setState(() {
+                                      _selectedImage = File(file.path);
+                                    });
+                                   }
+                                  );
+                                    //بلتقط الصورة من خلاله
+                                 // XFile? image =await ImagePicker().pickImage(source:ImageSource.gallery);
+                                 
+                                   //if(image!=null){
+                                   // _selectedImage = File(image.path);
+                                  // }
+                                 
+                                 },
                                  child: Container(
                                   width: 45,
                                   height: 45,
@@ -237,4 +260,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
       );
   }
+}
+void showImageSourceDialog(BuildContext context, Function (XFile) selectedFile){
+    showDialog(context: context,
+     builder: (BuildContext context){
+      return SimpleDialog(
+        title: Text("chose Image souce",
+        style: Theme.of(context).textTheme.titleMedium,
+        ),
+        children: [
+          SimpleDialogOption(
+            onPressed: () async{
+              Navigator.pop(context);
+              //بلتقط الصورة من خلاله
+            XFile? image =await ImagePicker().pickImage(source:ImageSource.camera);
+                                 
+            if(image!=null){
+             selectedFile(image);
+            }                    
+            },                    
+            child: Row(
+              children: [
+                Icon(Icons.camera_alt),
+                SizedBox(width: 8),
+                Text("camera"),
+              ],
+            ),
+          ),
+            SimpleDialogOption(
+            onPressed: () async{
+              Navigator.pop(context);
+              //بلتقط الصورة من خلاله
+         XFile? image =await ImagePicker().pickImage(source:ImageSource.gallery);
+                                 
+        if(image!=null){
+         selectedFile(image);
+     }
+     },
+            child: Row(
+              children: [
+                Icon(Icons.photo_library),
+                SizedBox(width: 8),
+                Text("Galary"),
+              ],
+            ),
+          )
+        
+        ],
+      );
+     },)
 }
