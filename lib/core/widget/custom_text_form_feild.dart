@@ -27,10 +27,11 @@ final String title;
        TextFormField( // have a parent named form
                     // كل ما يصير تعديل ع الاسم الي رح يدخله المستخدم بناديها ورح يخزن الاسم الجديد
                    controller: controller, //بوخد controller الي اعملته
-                    style: TextStyle(  //تنسيقات النص
+                    style:  //تنسيقات النص
                    
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
+                       Theme.of(context).textTheme.labelMedium,
+                    
+       
                    
                      validator: validator != null ? (String? value) => validator!(value): null,
                        maxLines: maxLines, //لتكبير حجم textFormField

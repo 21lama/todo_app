@@ -58,7 +58,7 @@ setState(() {
 
 
 setState(() {
-  this.tasks = tasks;
+  tasks = tasks;
 });
   }
   }

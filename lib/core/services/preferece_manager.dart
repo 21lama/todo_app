@@ -11,7 +11,7 @@ class PreferencesManager {
 
   late final SharedPreferences _preferences;   // ✅ بـ underscore
 
-  init() async {
+  Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();   // ✅ نفس الاسم
   }
 
@@ -23,10 +23,10 @@ class PreferencesManager {
     return await _preferences.setString(key, value) ; 
   }
 
-    getBool(String key){
+    bool? getBool(String key){
       return _preferences.getBool(key);
     }
-    setBool(String key,bool value ) async{
+    Future<bool> setBool(String key,bool value ) async{
       return await _preferences.setBool(key, value);
     }
 }
