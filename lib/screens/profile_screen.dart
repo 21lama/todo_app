@@ -177,14 +177,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Colors.white,
                         ),
                          trailing: 
-                        Switch(
-                          value: ThemeController.themeNotifier.value == ThemeMode.dark,
-                         onChanged:(bool value) async{
-                         ThemeController.toggleTheme();
-                          
-                         },
-                         activeTrackColor: Color(0xFF15B86C),
-                         ),
+                        ValueListenableBuilder(
+                          valueListenable: ThemeController.themeNotifier,
+                          builder: (BuildContext context, value, Widget? child){
+                            return Switch(
+                            value: value ==ThemeMode.dark,
+                           onChanged:(bool value) async{
+                           ThemeController.toggleTheme();
+                            
+                           },
+                           activeTrackColor: Color(0xFF15B86C),
+                           );
+                        
+                          } ,
+                           ),
                      
                        ),
                       

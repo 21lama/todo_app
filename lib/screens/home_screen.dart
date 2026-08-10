@@ -162,9 +162,8 @@ setState(() {
             padding: const EdgeInsets.only(top:24 , bottom: 32.0),
             child: Text(
               'MY Tasks',
-              style: TextStyle(color:Color(0xFFFFFCFC),
-              fontSize: 20
-              ),
+              style: Theme.of(context).textTheme.labelSmall,
+              
             ),
           ),
             //مشان توخد مساحة وييجوا تحت بعض ويظهروا كلهم
