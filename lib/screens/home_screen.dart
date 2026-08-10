@@ -38,7 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
   });
  
   }
-
+  _deletTask(int? id) async{
+    if (id==null) return;
+    setState(() {
+      tasks.removeWhere((task) => task.id == id);
+    
+  });
+  final updatedTask = tasks.map((element) => element.toMap()).toList();
+  }
   void _loadTask() async {
     final pref = await SharedPreferences.getInstance();
     final finalTask = pref.getString('tasks');
@@ -62,6 +69,8 @@ setState(() {
 });
   }
   }
+
+  
   
   @override
   Widget build(BuildContext context) {
@@ -168,7 +177,7 @@ setState(() {
           ),
             //مشان توخد مساحة وييجوا تحت بعض ويظهروا كلهم
               TaskListWidget(tasks: tasks,
-              onTap: (bool? value , int? index) async{
+              onTap: (bool? value , int? index ) async{
                 setState(() {
                 tasks[index!].isDone = value ?? false; // store on ram temprature
                                         
