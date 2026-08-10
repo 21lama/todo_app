@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/core/services/preferece_manager.dart' show PreferencesManager;
+import 'package:todo_app/core/theme/theme_controller.dart';
 import 'package:todo_app/main.dart';
 import 'package:todo_app/screens/user_detais_screen.dart';
 import 'package:todo_app/screens/welcome_screen.dart';
@@ -15,7 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   //مشان يوخد الاسم الي بدخله المستخدم
    late  String username;
    bool isloading =true;
-   bool isDarkMode = true;
+   
     String? motivationQuote;
 
 
@@ -175,14 +177,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Colors.white,
                         ),
                          trailing: 
-                        Switch(value:true ,
-                         onChanged:(bool value) {
-                          setState((){
-                            isDarkMode = value;
-                            if(isDarkMode){
-                          themeNotifier.value = ThemeMode.light;
-                            } else{themeNotifier.value = ThemeMode.dark;}
-                          });
+                        Switch(
+                          value: ThemeController.themeNotifier.value == ThemeMode.dark,
+                         onChanged:(bool value) async{
+                         ThemeController.toggleTheme();
+                          
                          },
                          activeTrackColor: Color(0xFF15B86C),
                          ),
